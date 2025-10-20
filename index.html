@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BrightWeather — Quick Check</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <h1>BrightWeather</h1>
+      <p class="tag">Type a city. Feel the sky.</p>
+    </header>
+
+    <form id="searchForm" class="search" autocomplete="off">
+      <input id="cityInput" type="text" placeholder="Enter city (e.g. Kano)" required />
+      <button type="submit">Check</button>
+    </form>
+
+    <div class="controls">
+      <button id="toggleUnit" class="small" title="Toggle °C / °F">°C</button>
+      <button id="useLast" class="small hidden">Last: <span id="lastCity"></span></button>
+    </div>
+
+    <section id="result" class="result hidden">
+      <div class="location">
+        <h2 id="cityName"></h2>
+        <p id="description" class="muted"></p>
+      </div>
+
+      <div class="weather-row">
+        <div class="temp">
+          <span id="tempValue"></span>
+          <small id="unitLabel">°C</small>
+        </div>
+        <img id="weatherIcon" alt="weather icon" />
+      </div>
+
+      <div class="meta">
+        <span id="humidity"></span>
+        <span id="wind"></span>
+      </div>
+    </section>
+
+    <p id="loading" class="muted hidden">Loading…</p>
+    <p id="error" class="error hidden"></p>
+
+    <footer class="foot">Made with ☀ • Kano Baker</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

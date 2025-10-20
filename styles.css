@@ -1,0 +1,64 @@
+:root{
+  --bg1: #fff8e6;
+  --bg2: #ffffff;
+  --accent: #ff7a59;
+  --accent-2: #ffd166;
+  --muted: #555;
+  --card: #ffffff;
+  --danger: #e74c3c;
+  --radius: 16px;
+  --maxw: 540px;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(180deg,var(--bg1), #f9fdfa 60%);
+  color:#0f1724;
+  padding:24px;
+}
+.app{
+  width:calc(100% - 32px);
+  max-width:var(--maxw);
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:0 12px 40px rgba(16,24,40,0.08);
+  text-align:center;
+  border: 1px solid rgba(255,122,89,0.06);
+}
+.hero h1{
+  margin:0;
+  font-size:1.6rem;
+  letter-spacing:0.6px;
+  color:var(--accent);
+}
+.tag{margin:6px 0 12px;color:var(--muted);font-size:0.95rem}
+.search{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.search input{
+  flex:1;padding:12px 14px;border-radius:12px;border:1px solid #f0e6df;font-size:1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.search button{
+  padding:11px 16px;border-radius:12px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;cursor:pointer;
+  box-shadow: 0 6px 18px rgba(255,122,89,0.18);
+}
+.controls{display:flex;gap:8px;justify-content:center;margin-bottom:10px}
+.small{padding:7px 10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06);background:#fff;cursor:pointer}
+.result{margin-top:6px;text-align:left;padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,250,240,0.9),#ffffff);box-shadow:0 6px 18px rgba(16,24,40,0.03)}
+.hidden{display:none}
+.location h2{margin:0;font-size:1.1rem;color:#0b1320}
+.muted{color:var(--muted);font-size:0.95rem;margin:6px 0}
+.weather-row{display:flex;align-items:center;justify-content:space-between;padding:8px 2px}
+.temp{font-size:2.4rem;font-weight:800;color:#0b1320}
+.weather-row img{width:72px;height:72px}
+.meta{display:flex;gap:12px;color:var(--muted);font-size:0.95rem;justify-content:flex-start;padding:6px 2px}
+.error{color:var(--danger);margin-top:10px;font-weight:600}
+.foot{font-size:0.85rem;color:var(--muted);margin-top:14px}
+@media (max-width:520px){
+  .weather-row img{width:60px;height:60px}
+  .temp{font-size:2rem}
+}
