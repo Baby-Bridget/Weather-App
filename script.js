@@ -1,107 +1,43 @@
-// Bright Weather App - search by city name
-const API_KEY = 'YOUR_API_KEY_HERE'; // <-- Replace with your OpenWeatherMap API key
-const BASE = 'https://api.openweathermap.org/data/2.5/weather';
+const API_KEY = 79ca883f502dc1d597593ca0665c7c0e 
+const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-const form = document.getElementById('searchForm');
-const cityInput = document.getElementById('cityInput');
-const result = document.getElementById('result');
-const cityName = document.getElementById('cityName');
-const description = document.getElementById('description');
-const tempValue = document.getElementById('tempValue');
-const weatherIcon = document.getElementById('weatherIcon');
-const humidity = document.getElementById('humidity');
-const wind = document.getElementById('wind');
-const errorBox = document.getElementById('error');
-const loading = document.getElementById('loading');
-const toggleUnit = document.getElementById('toggleUnit');
-const unitLabel = document.getElementById('unitLabel');
-const useLastBtn = document.getElementById('useLast');
-const lastCitySpan = document.getElementById('lastCity');
+const form = document.querySelector("form");
+const input = document.querySelector("#city");
+const weatherContainer = document.querySelector(".weather");
+const loadingText = document.querySelector(".loading");
 
-let unit = localStorage.getItem('unit') || 'metric'; // 'metric' or 'imperial'
-updateUnitUI();
-
-form.addEventListener('submit', async (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const city = cityInput.value.trim();
-  if (!city) return;
-  fetchWeather(city);
-});
+  const city = input.value.trim();
+  if (!city) return alert("Please enter a city name");
 
-toggleUnit.addEventListener('click', (e) => {
-  e.preventDefault();
-  unit = (unit === 'metric') ? 'imperial' : 'metric';
-  localStorage.setItem('unit', unit);
-  updateUnitUI();
-  const last = localStorage.getItem('lastCity');
-  if (last) fetchWeather(last);
-});
+  loadingText.textContent = "Loading...";
+  weatherContainer.innerHTML = "";
 
-useLastBtn.addEventListener('click', (e) => {
-  const last = localStorage.getItem('lastCity');
-  if (last) fetchWeather(last);
-});
-
-function updateUnitUI() {
-  toggleUnit.textContent = unit === 'metric' ? '°C' : '°F';
-  unitLabel.textContent = unit === 'metric' ? '°C' : '°F';
-}
-
-function showError(msg){
-  if(!msg){ errorBox.classList.add('hidden'); errorBox.textContent=''; return; }
-  errorBox.classList.remove('hidden');
-  errorBox.textContent = msg;
-}
-
-function showLoading(show){
-  loading.classList.toggle('hidden', !show);
-}
-
-function showResult() {
-  result.classList.remove('hidden');
-}
-function hideResult() {
-  result.classList.add('hidden');
-}
-
-function capitalize(s) {
-  if(!s) return '';
-  return s.split(' ').map(w => w[0].toUpperCase()+w.slice(1)).join(' ');
-}
-
-async function fetchWeather(city) {
-  showError('');
-  hideResult();
-  showLoading(true);
   try {
-    const url = ${BASE}?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=${unit};
-    const res = await fetch(url);
-    if (!res.ok) {
-      if (res.status === 404) throw new Error('City not found');
-      throw new Error('Failed to fetch weather');
-    }
-    const data = await res.json();
-    cityName.textContent = ${data.name}, ${data.sys.country};
-    description.textContent = capitalize(data.weather[0].description);
-    tempValue.textContent = Math.round(data.main.temp);
-    humidity.textContent = Humidity: ${data.main.humidity}%;
-    wind.textContent = Wind: ${Math.round(data.wind.speed)} ${unit === 'metric' ? 'm/s' : 'mph'};
-    weatherIcon.src = https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png;
-    weatherIcon.alt = data.weather[0].description;
-    showResult();
-    localStorage.setItem('lastCity', data.name);
-    lastCitySpan.textContent = data.name;
-    useLastBtn.classList.remove('hidden');
-  } catch (err) {
-    showError(err.message);
-  } finally {
-    showLoading(false);
-  }
-}
+    const response = await fetch(${API_URL}?q=${city}&appid=${API_KEY}&units=metric);
+    const data = await response.json();
 
-// load last city on start
-const last = localStorage.getItem('lastCity');
-if (last) {
-  lastCitySpan.textContent = last;
-  useLastBtn.classList.remove('hidden');
-}
+    if (data.cod !== 200) {
+      loadingText.textContent = "City not found 😕";
+      return;
+    }
+
+    const icon = data.weather[0].icon;
+    const description = data.weather[0].description;
+    const temp = data.main.temp;
+    const name = data.name;
+    const country = data.sys.country;
+
+    weatherContainer.innerHTML = `
+      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}">
+      <h2>${name}, ${country}</h2>
+      <p>${temp}°C</p>
+      <p>${description}</p>
+    `;
+    loadingText.textContent = "";
+  } catch (error) {
+    loadingText.textContent = "Error fetching weather data 😞";
+    console.error(error);
+  }
+});

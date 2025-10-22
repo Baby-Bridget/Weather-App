@@ -9,12 +9,12 @@
 <body>
   <main class="app">
     <header class="hero">
-      <h1>BrightWeather</h1>
+      <h1>Weather App</h1>
       <p class="tag">Type a city. Feel the sky.</p>
     </header>
 
     <form id="searchForm" class="search" autocomplete="off">
-      <input id="cityInput" type="text" placeholder="Enter city (e.g. Kano)" required />
+      <input id="cityInput" type="text" placeholder="Enter city (e.g. lagos)" required />
       <button type="submit">Check</button>
     </form>
 
@@ -34,7 +34,7 @@
           <span id="tempValue"></span>
           <small id="unitLabel">°C</small>
         </div>
-        <img id="weatherIcon" alt="weather icon" />
+        <img id="weather-icon" src="" alt="Weather icon" />
       </div>
 
       <div class="meta">
@@ -43,10 +43,10 @@
       </div>
     </section>
 
-    <p id="loading" class="muted hidden">Loading…</p>
+    <!-- <p>Loading….</p> -->
     <p id="error" class="error hidden"></p>
 
-    <footer class="foot">Made with ☀ • Kano Baker</footer>
+    <footer>Made with ❤ by Bridget</footer>
   </main>
 
   <script src="script.js"></script>
